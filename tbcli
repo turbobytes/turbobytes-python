@@ -1,0 +1,20 @@
+#!/usr/bin/python
+from turbobytes_api import TurboBytesAPI
+import sys, json
+
+
+if "__main__" in __name__:
+    if len(sys.argv) < 2:
+        print "Usage : tbcli 'OPTIONS AS JSON' "
+        exit()
+
+    options = json.loads(sys.argv[1])
+
+    tb = TurboBytesAPI(str(options["api_key"]), str(options["api_secret"]))
+    if options["command"] == "purge":
+        purgeid = tb.purge(options["zone"], options["paths"])["id"]
+        print json.dumps({"purgeid": purgeid})
+    elif options["command"] == "latestpurge":
+        print json.dumps(tb.latest_purges(options["zone"]))
+#    elif options["command"] == "purgestatus":
+        #Not yet implemented/exposed
