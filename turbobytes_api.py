@@ -61,6 +61,13 @@ class TurboBytesAPI(object):
         """
         return self.request("POST", path, data=data, needs_auth=needs_auth)
 
+    def put(self, path, data, needs_auth=True):
+        """
+        Makes a PUT request
+        """
+        return self.request("PUT", path, data=data, needs_auth=needs_auth)
+
+
     def get_server_time(self):
         """
         Gets timestamp string from the server. Usefull if timegap is over 15 mins between server and client
