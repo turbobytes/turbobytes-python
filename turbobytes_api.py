@@ -42,8 +42,8 @@ class TurboBytesAPI(object):
         headers = {}
         if needs_auth:
             headers["X-TB-Timestamp"], headers["Authorization"] = self.generate_auth_headers()
-        if method == "POST":
-            r, c = self.http.request(endpoint, "POST", data, headers=headers)
+        if method in ["POST", "PUT"]:
+            r, c = self.http.request(endpoint, method, data, headers=headers)
         else:
             r, c = self.http.request(endpoint, "GET", headers=headers)
         if r["status"] != "200":
