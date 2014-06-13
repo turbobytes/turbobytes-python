@@ -11,7 +11,7 @@ class TurboBytesAPI(object):
         """
         self.api_key = api_key
         self.api_secret = api_secret
-        self.http = httplib2.Http(ca_certs='PositiveSSL.bundle.pem') #Need this cause httplib2 does not know PositiveSSL
+        self.http = httplib2.Http() #Need this cause httplib2 does not know PositiveSSL
         self.server = server
         self.use_local_time = use_local_time
 
@@ -111,7 +111,7 @@ class TurboBytesAPI(object):
         day format is string yyyy-mm-dd
         """
         path = "/api/zone/%s/log/%s/" %(zoneid, day)
-        return self.get(path)["url"]
+        return self.get(path)
 
     def purge(self, zoneid, files):
         """
