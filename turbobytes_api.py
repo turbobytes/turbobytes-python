@@ -110,7 +110,7 @@ class TurboBytesAPI(object):
         Gets link to download access log for zone. If logging is enabled.
         day format is string yyyy-mm-dd
         """
-        path = "/api/zone/%s/log/%s/" %(zoneid, day)
+        path = "/api/zone/%s/log/%s/" %(zoneid, day.replace("-", "/"))
         return self.get(path)
 
     def purge(self, zoneid, files):
