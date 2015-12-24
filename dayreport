@@ -1,0 +1,31 @@
+#!/usr/bin/python
+from turbobytes_api import TurboBytesAPI
+import sys, json, math
+
+
+def convertSize(size):
+   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+   i = int(math.floor(math.log(size,1024)))
+   p = math.pow(1024,i)
+   s = round(size/p,2)
+   if (s > 0):
+       return '%s %s' % (s,size_name[i])
+   else:
+       return '0B'
+
+if "__main__" in __name__:
+    if len(sys.argv) < 5:
+        print "Usage : tbcli api_key api_secret zone_name date"
+        exit()
+
+    api_key = sys.argv[1]
+    api_secret = sys.argv[2]
+    zone_name = sys.argv[3]
+    date = sys.argv[4]
+
+    tb = TurboBytesAPI(api_key, api_secret)
+    print api_key, api_secret, zone_name, date
+    report = tb.get_report(zone_name, date)
+    print "bytes_useu: ", convertSize(report["bytes_useu"])
+    print "bytes_rotw: ", convertSize(report["bytes_rotw"])
+    print "total_bytes: ", convertSize(report["total_bytes"])
