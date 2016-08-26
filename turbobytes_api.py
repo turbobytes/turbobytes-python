@@ -34,12 +34,14 @@ class TurboBytesAPI(object):
         """
         return self.request("GET", path, needs_auth=needs_auth)
 
-    def request(self, method, path, data=None, needs_auth=True):
+    def request(self, method, path, data=None, needs_auth=True, extraHeaders = {}):
         """
         Makes a request to the api
         """
         endpoint = self.server + path
         headers = {}
+        for header,value in extraHeaders.iteritems():
+            headers[header] = value
         if needs_auth:
             headers["X-TB-Timestamp"], headers["Authorization"] = self.generate_auth_headers()
         if method in ["POST", "PUT"]:
@@ -52,7 +54,10 @@ class TurboBytesAPI(object):
             f.close()
             raise Exception(r["status"], r, c)
         else:
-            return json.loads(c)
+            try:
+                return json.loads(c)
+            except ValueError:
+                return c
 
 
     def post(self, path, data, needs_auth=True):
